@@ -31,7 +31,7 @@ x = np.array(x)
 x0 = np.random.rand(N,n,2)
 x0 = np.array(x0)
 
-solve[1,n](lo,d_p,Am,tspan,d_x0,n,d_x,True)
+solve[1,n](lo,p,Am,tspan,x0,n,x,True)
 
 res = d_x.copy_to_host()
 
