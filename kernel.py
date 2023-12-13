@@ -5,11 +5,11 @@ import numpy as np
 n1 = 15
 @cuda.jit
 def solve():#f,p,Am,tspan,x0,n,d_x,discrete=True,tol=1e-8):
-    sys_id = cuda.blockIdx
+    sys_id = cuda.blockIdx.x
     # dim = x0.shape[0]
     # i32_arr = cuda.shared.array(0, dtype=np.int32)
     # ds_X = cuda.shared.array(shape=10)
-    print("\nhello\n\n",sys_id)
+    # print(sys_id)
     # ds_X0 = cuda.shared.array(shape=d_x0.shape)
     # ds_step = cuda.shared.array(shape=n1)
     # i = cuda.threadIdx.x

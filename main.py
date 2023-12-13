@@ -37,7 +37,7 @@ d_x0 = cuda.to_device(x0) #,dtype=object)
 d_p = cuda.to_device(p) #,dtype=object)
 Am = cuda.to_device(Am)
 # print(d_p.shape)
-solve[N,n,(n*4+n)*32]()#lo,d_p,Am,tspan,d_x0,n,d_x,True,1e-8)
+solve[1,n]()#lo,d_p,Am,tspan,d_x0,n,d_x,True,1e-8)
 
 res = d_x.copy_to_host()
 
