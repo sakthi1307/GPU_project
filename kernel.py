@@ -4,30 +4,30 @@ from numba import cuda
 import numpy as np
 n1 = 15
 @cuda.jit
-def solve():#f,p,Am,tspan,x0,n,d_x,discrete=True,tol=1e-8):
+def solve(f,p,Am,tspan,x0,n,d_x,discrete):
     sys_id = cuda.blockIdx.x
-    # dim = x0.shape[0]
-    # i32_arr = cuda.shared.array(0, dtype=np.int32)
-    # ds_X = cuda.shared.array(shape=10)
-    # print(sys_id)
-    # ds_X0 = cuda.shared.array(shape=d_x0.shape)
-    # ds_step = cuda.shared.array(shape=n1)
-    # i = cuda.threadIdx.x
-    # d_x[sys_id,0,:,0] = x0[:,0]
-    # d_x[sys_id,0,:,1] = x0[:,1]
-    # for k in range(dim):
-    #     ds_X0[i,k] = x0[sys_id,i,k]  
-    # cuda.syncthreads()
-    # if discrete:
-    #     for t in range(tspan):
-    #         # load the network into shared memory assuming that always blockdim == n
-    #         #f(x_i+1,y_i+1)=[xi,yi]
-    #         k1 = f(ds_X,ds_X0,p,Am,i)
-    #         for k in range(dim):
-    #             ds_X0[i,k] = k1[k]  
-    #         cuda.syncthreads()
-    #         for k in range(dim):
-    #             d_x[sys_id,t,:,k] = ds_X0[:,k]
+    dim = x0.shape[0]
+    i32_arr = cuda.shared.array(0, dtype=np.int32)
+    ds_X = cuda.shared.array(shape=10)
+    print(sys_id)
+    ds_X0 = cuda.shared.array(shape=d_x0.shape)
+    ds_step = cuda.shared.array(shape=n1)
+    i = cuda.threadIdx.x
+    d_x[sys_id,0,:,0] = x0[:,0]
+    d_x[sys_id,0,:,1] = x0[:,1]
+    for k in range(dim):
+        ds_X0[i,k] = x0[sys_id,i,k]  
+    cuda.syncthreads()
+    if discrete:
+        for t in range(tspan):
+            # load the network into shared memory assuming that always blockdim == n
+            #f(x_i+1,y_i+1)=[xi,yi]
+            k1 = f(ds_X,ds_X0,p,Am,i)
+            for k in range(dim):
+                ds_X0[i,k] = k1[k]  
+            cuda.syncthreads()
+            for k in range(dim):
+                d_x[sys_id,t,:,k] = ds_X0[:,k]
 
 
     # else:
