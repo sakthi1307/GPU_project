@@ -1,6 +1,4 @@
 
-Presentation Youtube Link : https://youtu.be/_bfZMnXx8Po
-
 This repository contains a CUDA implementation of a differential equation solver using the Runge-Kutta method. The solver is designed to run on GPU for efficient parallel computation.
 
 ## Features
